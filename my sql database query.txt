@@ -1,0 +1,20 @@
+create database user;
+
+use user;
+
+create table users(
+id int NOT NULL AUTO_INCREMENT,
+user_name varchar(20),
+address varchar(20),
+email_address varchar(30),
+contact varchar(15),
+password varchar(50),
+role varchar(10),
+image varchar(100),
+status varchar(20) NOT NULL DEFAULT "ACTIVE ",
+mothername varchar(30),
+PRIMARY KEY(id )
+);
+
+
+
