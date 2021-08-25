@@ -17,7 +17,11 @@ import javax.servlet.http.HttpSession;
 
 import com.epic.login.model.Users;
 import com.epic.login.dao.registerDAO;
+import com.epic.login.model.UserLog;
 import com.epic.login.security.AES;
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -54,6 +58,37 @@ try{
                             
                             if(role.equals("ADMIN")){
                                 response.sendRedirect("new.jsp?name="+name);
+                                
+                                
+                                ///////////////////////////////////////////////////////
+            
+        int id = registerdao.getId(name);
+        System.out.println("game : "+id);
+        
+        
+        String pattern = "yyyy-MM-dd";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        String date = simpleDateFormat.format(new Date());
+        System.out.println(date);
+        
+        
+        Format f = new SimpleDateFormat("HH:mm:ss");
+        String strResult = f.format(new Date());
+        System.out.println("Time = "+strResult);
+            
+            
+        String log="Admin Sign IN";
+        
+        UserLog userlog = new UserLog();
+        userlog.setId(id);
+        userlog.setTime(strResult);
+        userlog.setDate(date);
+        userlog.setLog(log);
+            
+         registerdao.addLog(userlog);    
+            
+         ///////////////////////////////////////////////////////////////////////// 
+                                
                             }else{
                                 
                                 String state="ACTIVE ";
@@ -62,6 +97,36 @@ try{
                                 
                                 if (registerdao.validateState(users)) {
                                 response.sendRedirect("profile.jsp?name="+name);
+                                
+           ///////////////////////////////////////////////////////
+            
+        int id = registerdao.getId(name);
+        System.out.println("game : "+id);
+        
+        
+        String pattern = "yyyy-MM-dd";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        String date = simpleDateFormat.format(new Date());
+        System.out.println(date);
+        
+        
+        Format f = new SimpleDateFormat("HH:mm:ss");
+        String strResult = f.format(new Date());
+        System.out.println("Time = "+strResult);
+            
+            
+        String log="User Sign IN";
+        
+        UserLog userlog = new UserLog();
+        userlog.setId(id);
+        userlog.setTime(strResult);
+        userlog.setDate(date);
+        userlog.setLog(log);
+            
+         registerdao.addLog(userlog);    
+            
+         ///////////////////////////////////////////////////////////////////////// 
+                                
                                 }else{
                                     response.sendRedirect("error.jsp");
                                 }

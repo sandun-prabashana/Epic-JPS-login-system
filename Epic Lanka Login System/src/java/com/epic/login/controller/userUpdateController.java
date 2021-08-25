@@ -6,10 +6,14 @@
 package com.epic.login.controller;
 
 import com.epic.login.dao.registerDAO;
+import com.epic.login.model.UserLog;
 import com.epic.login.model.Users;
 import com.epic.login.security.AES;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.json.Json;
@@ -73,6 +77,36 @@ public class userUpdateController extends HttpServlet {
             resp.setContentType("application/json");
             if (b){
             writer.write("{\"operation\":\"success\"}");
+            
+                                            ///////////////////////////////////////////////////////
+            
+        int id = registrationDao.getId(userName);
+        System.out.println("game : "+id);
+        
+        
+        String pattern = "yyyy-MM-dd";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        String date = simpleDateFormat.format(new Date());
+        System.out.println(date);
+        
+        
+        Format f = new SimpleDateFormat("HH:mm:ss");
+        String strResult = f.format(new Date());
+        System.out.println("Time = "+strResult);
+            
+            
+        String log="Update Profile Details";
+        
+        UserLog userlog = new UserLog();
+        userlog.setId(id);
+        userlog.setTime(strResult);
+        userlog.setDate(date);
+        userlog.setLog(log);
+            
+         registrationDao.addLog(userlog);    
+            
+         ///////////////////////////////////////////////////////////////////////// 
+            
             }else{
                 writer.write("{\"operation\":\"failed\"}");
             }

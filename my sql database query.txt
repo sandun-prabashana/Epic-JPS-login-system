@@ -16,5 +16,12 @@ mothername varchar(30),
 PRIMARY KEY(id )
 );
 
+create table user_log(
+id int NOT NULL,
+time varchar(20),
+data varchar(30),
+constraint foreign key (id) references users (id)
+);
+
 
 

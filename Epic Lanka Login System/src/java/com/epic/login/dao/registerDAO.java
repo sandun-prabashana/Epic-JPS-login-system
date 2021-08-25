@@ -6,6 +6,7 @@
 package com.epic.login.dao;
 
 import com.epic.login.db.DBConnection;
+import com.epic.login.model.UserLog;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -365,8 +366,8 @@ public boolean registerEmployee(Users users) throws ClassNotFoundException {
     
         public int deleteUser(int id) throws SQLException {
             
-        final String query="DELETE FROM users WHERE id=?";
-        
+        final String query="delete from users, user_log using users Inner Join user_log where users.id = ? and users.id= user_log.id;";
+
         System.out.println("wade hari");
         int i = 0;
         DBConnection dbConnection = null;
@@ -572,6 +573,141 @@ public boolean registerEmployee(Users users) throws ClassNotFoundException {
         }
         return null;
 
+    }
+        
+        public String getCountBystatus(String status) {
+        DBConnection connection = null;
+        String count = null;
+        try {
+            connection = new DBConnection();
+            final String url="select count(id) from users where status=? and role = 'USER'";
+            PreparedStatement pstm = connection.getConnection().prepareStatement(url);
+            pstm.setString(1, status);
+            ResultSet rst = pstm.executeQuery();
+            while (rst.next()) {
+                 count = rst.getString(1);
+            }
+            return count;
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (Exception ex) {
+        Logger.getLogger(registerDAO.class.getName()).log(Level.SEVERE, null, ex);
+    }finally {
+            try {
+                connection.connection.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+        return null;
+
+    }
+        
+        public int getId(String name) {
+        DBConnection connection = null;
+        int id = 0;
+        try {
+            connection = new DBConnection();
+            final String url="select id from users where user_name=?";
+            PreparedStatement pstm = connection.getConnection().prepareStatement(url);
+            pstm.setString(1, name);
+            ResultSet rst = pstm.executeQuery();
+            while (rst.next()) {
+                 id = rst.getInt(1);
+            }
+            return id;
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (Exception ex) {
+        Logger.getLogger(registerDAO.class.getName()).log(Level.SEVERE, null, ex);
+    }finally {
+            try {
+                connection.connection.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+        ;
+    return 0;
+
+    }
+        
+        public boolean addLog(UserLog userlog) throws ClassNotFoundException {
+            
+        final String query = "INSERT INTO user_log" +
+            "  ( id , time  , data  , log) VALUES " +
+            " ( ?, ?, ?, ?);";
+        DBConnection connection = null;
+        try {
+            connection = new DBConnection();
+
+
+                    PreparedStatement preparedStatement = connection.getConnection().prepareStatement(query); 
+                    preparedStatement.setInt(1,userlog.getId() );
+                    preparedStatement.setString(2, userlog.getTime() );
+                    preparedStatement.setString(3, userlog.getDate());
+                    preparedStatement.setString(4, userlog.getLog());
+                    System.out.println(preparedStatement);
+
+            int i = preparedStatement.executeUpdate();
+            if (i >= 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } finally {
+            try {
+                connection.connection.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+        return false;
+    }
+        
+        
+       public ArrayList<UserLog> searchLog(String name) {
+    try {
+        System.out.println("reg bd");
+        final String query = "select user_log.id,time,data,log from users,user_log where users.id= user_log.id and user_name=?";
+        
+        Users u = new Users();
+        
+        DBConnection dbConnection = null;
+        
+        ResultSet rst = null;
+        
+        dbConnection = new DBConnection();
+        PreparedStatement pstm = dbConnection.getConnection().prepareStatement(query);
+        pstm.setString(1, name);
+        rst = pstm.executeQuery();
+
+        ArrayList<UserLog> load = new ArrayList<>();
+        while (rst.next()) {
+            
+            
+            
+            load.add(new UserLog(rst.getInt(1), rst.getString(2), rst.getString(3), rst.getString(4)));
+
+            System.out.println("hari");
+        }
+        System.out.println("noo");
+        dbConnection.connection.close();
+        return load;
+    } catch (SQLException ex) {
+        Logger.getLogger(registerDAO.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (ClassNotFoundException ex) {
+        Logger.getLogger(registerDAO.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (Exception ex) {
+        Logger.getLogger(registerDAO.class.getName()).log(Level.SEVERE, null, ex);
+    }
+        return null;
     }
         
 }

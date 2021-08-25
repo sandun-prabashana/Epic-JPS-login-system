@@ -6,10 +6,14 @@
 package com.epic.login.controller;
 
 import com.epic.login.dao.registerDAO;
+import com.epic.login.model.UserLog;
 import com.epic.login.model.Users;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.json.Json;
@@ -89,6 +93,35 @@ public class updateAdminImage extends HttpServlet {
                     
                     if(b){
                         resp.sendRedirect("adminProfile.jsp?name="+name);
+                        
+                                                                                            ///////////////////////////////////////////////////////
+            
+        int id = registrationDao.getId(name);
+        System.out.println("game : "+id);
+        
+        
+        String pattern = "yyyy-MM-dd";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        String date = simpleDateFormat.format(new Date());
+        System.out.println(date);
+        
+        
+        Format f = new SimpleDateFormat("HH:mm:ss");
+        String strResult = f.format(new Date());
+        System.out.println("Time = "+strResult);
+            
+            
+        String log="Admin Profile Picture Update";
+        
+        UserLog userlog = new UserLog();
+        userlog.setId(id);
+        userlog.setTime(strResult);
+        userlog.setDate(date);
+        userlog.setLog(log);
+            
+         registrationDao.addLog(userlog);    
+            
+         ///////////////////////////////////////////////////////////////////////// 
                     }else{
                         
                     }
