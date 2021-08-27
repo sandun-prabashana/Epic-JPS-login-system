@@ -14,7 +14,6 @@
 
     <!-- Custom fonts for this template-->
     <link href="assests/css/profile.css" rel="stylesheet" type="text/css">
-    <link href="assests/css/table.css" rel="stylesheet" type="text/css">
     <link href="assests/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
@@ -69,7 +68,7 @@
         </li>
 
         <!-- Nav Item - Utilities Collapse Menu -->
-        <li class="nav-item">
+        <li class="nav-item" id="golog">
             <a class="nav-link collapsed" href="javascript:log()" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
                 <i class="fas fa-fw fa-cog"></i>
                 <span>User Log</span>
@@ -87,22 +86,25 @@
 
         <!-- Main Content -->
         <div id="content">
-
+    
+            
+            
+            
+            
+            
+            
+            
+            
             <!-- Topbar -->
             <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
-                <!-- Sidebar Toggle (Topbar) -->
-                <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                    <i class="fa fa-bars"></i>
-                </button>
+
 
 
 
 
                 <!-- Topbar Navbar -->
                 <ul class="navbar-nav ml-auto">
-
-
 
                     <div class="topbar-divider d-none d-sm-block"></div>
 
@@ -491,6 +493,14 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="assests/js/bootstrap.min.js"></script>
 <script src="assests/js/profiledata.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="assests/js/jquery-3.6.0.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="assests/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
 
 
 <script>
@@ -693,12 +703,13 @@ v2.style.display='none';
 v3.style.display='none';
 
 }
+$("#golog").click(function (){
 
-function log(){
-v1.style.display = 'none';
+v1.style.display ='none';
 v2.style.display='none';
 v3.style.display='block';
-}
+
+});
 
 function bye(){
 v1.style.display = 'none';
@@ -729,7 +740,7 @@ var logname = $("#userlog").val();
                 for (var i=0; i<response.length; i++) {
                     
                     
-                    var row = $('<tr><td>' + response[i].id+ '</td><td>'+response[i].time +'</td><td>'+ response[i].data +'</td><td>'+response[i].log + '<td></tr>');
+                    var row = $('<tr><td>' + response[i].id+ '</td><td>'+response[i].time +'</td><td>'+ response[i].date +'</td><td>'+response[i].log + '<td></tr>');
                     $("#tblLog").append(row);
                     
                     

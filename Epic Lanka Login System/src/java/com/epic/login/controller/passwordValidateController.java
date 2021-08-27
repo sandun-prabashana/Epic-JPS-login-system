@@ -12,6 +12,7 @@ package com.epic.login.controller;
 import com.epic.login.dao.registerDAO;
 import com.epic.login.model.Users;
 import com.epic.login.security.AES;
+import com.epic.login.security.PasswordConveter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Level;
@@ -27,6 +28,8 @@ public class passwordValidateController extends HttpServlet {
   
     private registerDAO registrationDao;
     
+    private PasswordConveter conveter = new PasswordConveter();
+    
     public void init() {
         registrationDao =new registerDAO();
     }
@@ -38,10 +41,7 @@ public class passwordValidateController extends HttpServlet {
             String password = req.getParameter("password");
 
             
-            System.out.println(password);
-            AES aes = new AES("gtevdywoap12gryd");
-            String encdata = aes.encrypt(password);
-            System.out.println(encdata);
+            String encdata = conveter.convertPassword(password);
             
             
             Users users = new Users();

@@ -19,6 +19,7 @@ import com.epic.login.model.Users;
 import com.epic.login.dao.registerDAO;
 import com.epic.login.model.UserLog;
 import com.epic.login.security.AES;
+import com.epic.login.security.PasswordConveter;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -30,6 +31,8 @@ import java.util.logging.Logger;
 public class loginController extends HttpServlet {
 	private registerDAO registerdao;
 
+        private PasswordConveter conveter = new PasswordConveter();
+        
 	public void init() {
 		registerdao = new registerDAO();
 	}
@@ -41,9 +44,9 @@ try{
 		String password = request.getParameter("password");
                 
                 System.out.println(password);
-                AES aes = new AES("gtevdywoap12gryd");
-                String encdata = aes.encrypt(password);
-                System.out.println(encdata);
+
+                
+                String encdata = conveter.convertPassword(password);
                 
 		Users users = new Users();
 		users.setUser_name(name);

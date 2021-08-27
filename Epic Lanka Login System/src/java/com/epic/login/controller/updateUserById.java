@@ -9,6 +9,7 @@ import com.epic.login.dao.registerDAO;
 import com.epic.login.model.UserLog;
 import com.epic.login.model.Users;
 import com.epic.login.security.AES;
+import com.epic.login.security.PasswordConveter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.Format;
@@ -33,7 +34,8 @@ public class updateUserById extends HttpServlet {
     //create reference variable
     private registerDAO registrationDao;
 
-    //create object class loading time
+    private PasswordConveter conveter = new PasswordConveter();
+    
     public void init() {
         registrationDao =new registerDAO();
     }
@@ -58,9 +60,7 @@ public class updateUserById extends HttpServlet {
             System.out.println(address);
             System.out.println(email);
             
-            AES aes = new AES("gtevdywoap12gryd");
-            String encdata = aes.encrypt(password);
-            System.out.println(encdata);
+            String encdata = conveter.convertPassword(password);
             
             Users user = new Users();
             
